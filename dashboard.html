@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCCF Bold Ideas | Science Innovation Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ocean-deep: #0a1628;
+            --ocean-mid: #0f2847;
+            --ocean-light: #1a4a7a;
+            --coral-primary: #ff6b4a;
+            --coral-glow: #ff8a6e;
+            --eco-green: #00d4aa;
+            --eco-light: #4fffdb;
+            --sand-light: #f5f0e8;
+            --text-light: #ffffff;
+            --text-muted: #8ba3c7;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--ocean-deep);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .ocean-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(0, 212, 170, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(255, 107, 74, 0.1) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 50%, var(--ocean-mid) 0%, var(--ocean-deep) 100%);
+        }
+
+        .wave-container {
+            position: fixed;
+            bottom: 0; left: 0;
+            width: 100%; height: 200px;
+            overflow: hidden;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 200%; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C200,120 400,0 600,60 C800,120 1000,0 1200,60 L1200,120 L0,120 Z' fill='%2300d4aa'/%3E%3C/svg%3E") repeat-x;
+            background-size: 50% 100%;
+            animation: wave 15s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            bottom: 10px;
+            opacity: 0.5;
+            animation: wave 12s linear infinite reverse;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .header {
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 22, 40, 0.9);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .logo {
+            height: 45px;
+            object-fit: contain;
+        }
+
+        .logo-coca-cola {
+            filter: brightness(0) invert(1);
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 40px;
+            background: var(--glass-border);
+        }
+
+        .header-title {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .header-stat {
+            text-align: right;
+        }
+
+        .header-stat-value {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--eco-green);
+        }
+
+        .header-stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .main-content {
+            padding: 2rem 3rem 4rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 2rem 0 3rem;
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--eco-green);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            animation: fadeSlideDown 0.8s ease-out;
+        }
+
+        .hero-title {
+            font-family: 'Clash Display', sans-serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 0.75rem;
+            animation: fadeSlideDown 0.8s ease-out 0.1s both;
+        }
+
+        .hero-title .highlight {
+            background: linear-gradient(135deg, var(--coral-primary), var(--eco-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            animation: fadeSlideDown 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeSlideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.25rem 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--card-accent, var(--eco-green));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .summary-card:hover, .summary-card.active {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--card-accent, var(--eco-green));
+        }
+
+        .summary-card:hover::before, .summary-card.active::before {
+            transform: scaleX(1);
+        }
+
+        .summary-card[data-filter*="STRONGLY"] { --card-accent: #00d4aa; }
+        .summary-card[data-filter="★ RECOMMEND"] { --card-accent: #4fffdb; }
+        .summary-card[data-filter="SHORTLIST"] { --card-accent: #7dd3fc; }
+        .summary-card[data-filter="CONSIDER"] { --card-accent: #fbbf24; }
+        .summary-card[data-filter*="MAYBE"] { --card-accent: #fb923c; }
+        .summary-card[data-filter="LOW PRIORITY"] { --card-accent: #f87171; }
+        .summary-card[data-filter="NOT RECOMMENDED"] { --card-accent: #ef4444; }
+
+        .summary-value {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--card-accent, var(--eco-green));
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+
+        .summary-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            line-height: 1.2;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 280px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.9rem 1.25rem 0.9rem 2.75rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--eco-green);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .search-input::placeholder { color: var(--text-muted); }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .filter-btn {
+            padding: 0.9rem 1.25rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--eco-green);
+        }
+
+        .filter-btn.active {
+            background: var(--eco-green);
+            color: var(--ocean-deep);
+            border-color: var(--eco-green);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .results-count {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        .results-count span { color: var(--eco-green); }
+
+        .applicants-grid {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .applicant-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .applicant-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: var(--card-color, var(--eco-green));
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+            transform-origin: bottom;
+        }
+
+        .applicant-card:hover {
+            transform: translateX(6px);
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .applicant-card:hover::before, .applicant-card.expanded::before {
+            transform: scaleY(1);
+        }
+
+        .applicant-card.expanded {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .card-main {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1.25rem;
+            align-items: center;
+        }
+
+        .science-badge {
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            background: var(--badge-bg, var(--glass));
+            border: 2px solid var(--badge-border, var(--glass-border));
+            flex-shrink: 0;
+        }
+
+        .science-badge.strong { --badge-bg: rgba(0, 212, 170, 0.2); --badge-border: var(--eco-green); }
+        .science-badge.good { --badge-bg: rgba(79, 255, 219, 0.2); --badge-border: var(--eco-light); }
+        .science-badge.some { --badge-bg: rgba(251, 191, 36, 0.2); --badge-border: #fbbf24; }
+        .science-badge.conventional { --badge-bg: rgba(248, 113, 113, 0.2); --badge-border: #f87171; }
+        .science-badge.unclear { --badge-bg: rgba(148, 163, 184, 0.2); --badge-border: #94a3b8; }
+
+        .card-info { min-width: 0; }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .venture-name {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            line-height: 1.2;
+        }
+
+        .recommendation-tag {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .recommendation-tag.strongly { background: var(--eco-green); color: var(--ocean-deep); }
+        .recommendation-tag.recommend { background: var(--eco-light); color: var(--ocean-deep); }
+        .recommendation-tag.shortlist { background: #7dd3fc; color: var(--ocean-deep); }
+        .recommendation-tag.consider { background: #fbbf24; color: var(--ocean-deep); }
+        .recommendation-tag.maybe { background: #fb923c; color: var(--ocean-deep); }
+        .recommendation-tag.low { background: #f87171; color: white; }
+        .recommendation-tag.not { background: #ef4444; color: white; }
+
+        .what-they-do {
+            font-size: 0.9rem;
+            color: var(--coral-glow);
+            margin-bottom: 0.3rem;
+            line-height: 1.3;
+        }
+
+        .science-level {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .card-score {
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .score-value {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--eco-green);
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .card-details {
+            display: none;
+            padding-top: 1.25rem;
+            margin-top: 1.25rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .applicant-card.expanded .card-details { display: block; }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .detail-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.75rem;
+            border-radius: 8px;
+        }
+
+        .detail-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.2rem;
+        }
+
+        .detail-value {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            word-break: break-word;
+        }
+
+        .scores-breakdown {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .score-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+        }
+
+        .score-item-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .score-item-value {
+            font-family: 'Clash Display', sans-serif;
+            font-weight: 600;
+            color: var(--eco-green);
+            font-size: 0.85rem;
+        }
+
+        .score-bar {
+            width: 50px; height: 4px;
+            background: var(--glass);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .score-bar-fill {
+            height: 100%;
+            background: var(--eco-green);
+            border-radius: 2px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 0.75rem;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .main-content { padding: 1rem; }
+            .card-main {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            .science-badge { display: none; }
+            .summary-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--ocean-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--ocean-light); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--eco-green); }
+    </style>
+</head>
+<body>
+    <div class="ocean-bg"></div>
+    <div class="wave-container">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <header class="header">
+        <div class="logo-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Coca-Cola_logo.svg/512px-Coca-Cola_logo.svg.png" alt="The Coca-Cola Foundation" class="logo logo-coca-cola">
+            <div class="logo-divider"></div>
+            <img src="https://images.squarespace-cdn.com/content/v1/5e4f59b94c9f0c23ad33a098/1603788289325-8KXVK1YXVG2PPQR3JZLD/OHA+Logo.png" alt="OceanHub Africa" class="logo">
+            <div class="logo-divider"></div>
+            <span class="header-title">BOLD IDEAS PROJECT</span>
+        </div>
+        <div class="header-stats">
+            <div class="header-stat">
+                <div class="header-stat-value">$120K</div>
+                <div class="header-stat-label">Available Funding</div>
+            </div>
+            <div class="header-stat">
+                <div class="header-stat-value" id="totalApplicants">0</div>
+                <div class="header-stat-label">Applications</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="hero">
+            <div class="hero-label">🔬 Science-Based Innovation Evaluation</div>
+            <h1 class="hero-title">Africa's <span class="highlight">Boldest</span> Plastic Solutions</h1>
+            <p class="hero-subtitle">Identifying scientists, innovators, and startups driving real impact in plastic circularity</p>
+        </section>
+
+        <div class="summary-grid" id="summaryGrid"></div>
+
+        <div class="controls">
+            <div class="search-box">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search ventures, innovations, locations...">
+            </div>
+            <button class="filter-btn" id="scienceOnlyBtn">🔬 Science Only</button>
+            <button class="filter-btn" id="resetBtn">↺ Reset</button>
+        </div>
+
+        <div class="results-header">
+            <div class="results-count">Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span> applicants</div>
+        </div>
+
+        <div class="applicants-grid" id="applicantsGrid"></div>
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="empty-state-icon">🔍</div>
+            <p>No applicants match your filters</p>
+        </div>
+    </main>
+
+    <script>
+        const applicants = [{"ID": 112, "Venture_Name": "NRT - Ngom Recycling Transformation", "Contact": "Mouhamed Moctar Ngom", "Email": "Ngomrecyclage@gmail.com", "Location": "Pikine", "Stage": "Scaling/ Replication Phase", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "\u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2605\u2606 GOOD SCIENCE - Mixed Tech", "Target_Countries": "Cote d'Ivoire, Gambia, Guinea, Guinea-Bissau, Mali, Mauritania , Senegal", "Plastic_Tonnes": 1000.0, "Livelihoods": 50, "Score_Innovation_30%": 3.4, "Score_Impact_25%": 3.8, "Score_Social_20%": 3.3, "Score_Commercial_15%": 4.0, "Score_Team_10%": 4.8, "WEIGHTED_SCORE": 3.71, "RECOMMENDATION": "SHORTLIST"}, {"ID": 24, "Venture_Name": "PLASMA-TANGANYIKA CIRCULAR HUB (PTCH)", "Contact": "SYLVERE NDIKUMANA", "Email": "sylverendikumana@gmail.com", "Location": "Bujumbura, Bujumbura Mairie", "Stage": "Idea Phase/ Concept ", "Legal_Status": "University / Research spin-out", "WHAT_THEY_DO": "Pyrolysis conversion | Plasma/gasification technology | \u2192 Fuel/energy output | \u2192 Construction materials", "SCIENCE_LEVEL": "\u2605\u2605\u2605 STRONG SCIENCE - Biotech/Chemical", "Target_Countries": "Burundi, Democratic Republic of the Congo, Tanzania ", "Plastic_Tonnes": 3000.0, "Livelihoods": 250, "Score_Innovation_30%": 4.7, "Score_Impact_25%": 3.5, "Score_Social_20%": 4.0, "Score_Commercial_15%": 2.0, "Score_Team_10%": 2.8, "WEIGHTED_SCORE": 3.66, "RECOMMENDATION": "\u2605 STRONGLY RECOMMEND"}, {"ID": 119, "Venture_Name": "GVM Company Ltd", "Contact": "Gilbert Mutai", "Email": "mutai0911@gmail.com", "Location": "Kampala", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Pyrolysis conversion | Hydrothermal liquefaction | Chemical depolymerization | Catalytic conversion", "SCIENCE_LEVEL": "\u2605\u2605\u2605 STRONG SCIENCE - Process Innovation", "Target_Countries": "Kenya, Tanzania , Uganda ", "Plastic_Tonnes": 1500.0, "Livelihoods": 200, "Score_Innovation_30%": 4.3, "Score_Impact_25%": 3.5, "Score_Social_20%": 4.0, "Score_Commercial_15%": 2.5, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 3.64, "RECOMMENDATION": "\u2605 STRONGLY RECOMMEND"}, {"ID": 38, "Venture_Name": "Kaduvest ", "Contact": "Kabo Duta", "Email": "bestorigsales@gmail.com", "Location": "Gaborone", "Stage": "Lab or pilot testing", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Enzymatic plastic degradation | Microbial/bacterial processing | Chemical depolymerization | Catalytic conversion", "SCIENCE_LEVEL": "\u2605\u2605\u2605 STRONG SCIENCE - Process Innovation", "Target_Countries": "Botswana", "Plastic_Tonnes": 500.0, "Livelihoods": 100, "Score_Innovation_30%": 4.3, "Score_Impact_25%": 3.2, "Score_Social_20%": 3.1, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.8, "WEIGHTED_SCORE": 3.54, "RECOMMENDATION": "\u2605 STRONGLY RECOMMEND"}, {"ID": 85, "Venture_Name": "Terraplat Innovations", "Contact": "Jerone Opoku Agyapong", "Email": "opokuagyapongjerone@gmail.com", "Location": "Cape Coast", "Stage": "Lab or pilot testing", "Legal_Status": "Informal team", "WHAT_THEY_DO": "Microbial/bacterial processing", "SCIENCE_LEVEL": "\u2605\u2605\u2605 STRONG SCIENCE - Biotech/Chemical", "Target_Countries": "Ghana, Togo", "Plastic_Tonnes": 24.0, "Livelihoods": 30, "Score_Innovation_30%": 4.5, "Score_Impact_25%": 3.0, "Score_Social_20%": 3.0, "Score_Commercial_15%": 2.8, "Score_Team_10%": 2.8, "WEIGHTED_SCORE": 3.4, "RECOMMENDATION": "\u2605 RECOMMEND"}, {"ID": 100, "Venture_Name": "GreenZA", "Contact": "Ana  Muntswu", "Email": "anza@greenza.co.za", "Location": "Thohoyandou", "Stage": "Scaling/ Replication Phase", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Botswana, Eswatini, Lesotho, Mozambique, South Africa, Zimbabwe", "Plastic_Tonnes": 500.0, "Livelihoods": 500, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 4.0, "Score_Social_20%": 4.0, "Score_Commercial_15%": 4.0, "Score_Team_10%": 4.0, "WEIGHTED_SCORE": 3.4, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 70, "Venture_Name": "Green Energy Holding Group", "Contact": "Terrance MPOFU", "Email": "info@tswinasolutions.co.za", "Location": "Brakpan", "Stage": "Early pilot in real conditions", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Angola, Ghana, Mozambique, Namibia, Nigeria, South Africa", "Plastic_Tonnes": 263.0, "Livelihoods": 50, "Score_Innovation_30%": 2.9, "Score_Impact_25%": 3.7, "Score_Social_20%": 3.3, "Score_Commercial_15%": 3.0, "Score_Team_10%": 4.8, "WEIGHTED_SCORE": 3.39, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 15, "Venture_Name": "VisionLoop Africa", "Contact": "Alick Chali", "Email": "alickchali12@gmail.com", "Location": "Lusaka", "Stage": "Lab or pilot testing", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Deep learning/neural networks | Spectral/optical sorting | AI-powered vision systems", "SCIENCE_LEVEL": "\u2605\u2605\u2606 GOOD SCIENCE - Mixed Tech", "Target_Countries": "Mozambique, South Africa, Zambia ", "Plastic_Tonnes": 120.0, "Livelihoods": 45, "Score_Innovation_30%": 3.4, "Score_Impact_25%": 3.4, "Score_Social_20%": 3.0, "Score_Commercial_15%": 3.0, "Score_Team_10%": 4.1, "WEIGHTED_SCORE": 3.33, "RECOMMENDATION": "SHORTLIST"}, {"ID": 123, "Venture_Name": "PlastiCycle Kenya: Innovative Conversion of Plastic Waste into Sustainable Fuels and Functional Products", "Contact": "SHADRACK MULE", "Email": "muleshadrack@gmail.com", "Location": "KERICHO", "Stage": "Lab or pilot testing", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Enzymatic plastic degradation | Pyrolysis conversion | Chemical depolymerization | \u2192 Fuel/energy output", "SCIENCE_LEVEL": "\u2605\u2605\u2605 STRONG SCIENCE - Biotech/Chemical", "Target_Countries": "Kenya, Tanzania , Uganda ", "Plastic_Tonnes": 150.0, "Livelihoods": 35, "Score_Innovation_30%": 4.5, "Score_Impact_25%": 2.9, "Score_Social_20%": 3.0, "Score_Commercial_15%": 2.5, "Score_Team_10%": 2.8, "WEIGHTED_SCORE": 3.33, "RECOMMENDATION": "\u2605 RECOMMEND"}, {"ID": 56, "Venture_Name": "MWP", "Contact": "Ritha Daniella Sahinkuye", "Email": "rsahinkuye@gmail.com", "Location": "Kigali, Rwanda", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "\u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Burundi, Democratic Republic of the Congo, Kenya, Rwande, Tanzania ", "Plastic_Tonnes": 70000000.0, "Livelihoods": 5000, "Score_Innovation_30%": 2.4, "Score_Impact_25%": 3.8, "Score_Social_20%": 4.0, "Score_Commercial_15%": 3.5, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 3.32, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 41, "Venture_Name": "Golden Hatch Co. Ltd/ BlueBox Tanzania", "Contact": "Joseph Nelson", "Email": "josephramadhan567@gmail.com", "Location": "Mbeya", "Stage": "Early pilot in real conditions", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Microbial/bacterial processing | \u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2605\u2605 STRONG SCIENCE - Process Innovation", "Target_Countries": "Tanzania ", "Plastic_Tonnes": 35.0, "Livelihoods": 32, "Score_Innovation_30%": 3.8, "Score_Impact_25%": 3.0, "Score_Social_20%": 2.5, "Score_Commercial_15%": 3.0, "Score_Team_10%": 4.6, "WEIGHTED_SCORE": 3.3, "RECOMMENDATION": "\u2605 RECOMMEND"}, {"ID": 37, "Venture_Name": "Janus Cleantech Solutions Limited", "Contact": "Olushola Ogunniyi", "Email": "hello@janus.africa", "Location": "Lagos", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Ethiopia, Ghana, Kenya, Nigeria", "Plastic_Tonnes": 27375.0, "Livelihoods": 1000, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 4.3, "Score_Social_20%": 4.0, "Score_Commercial_15%": 3.5, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 3.3, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 94, "Venture_Name": "LIBE GREEN INNOVATION ", "Contact": "Liberatha  Kawamala ", "Email": "liberathakawamala@gmail.com", "Location": "Dar es salaam ", "Stage": "Scaling/ Replication Phase", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Tanzania ", "Plastic_Tonnes": 5000.0, "Livelihoods": 35, "Score_Innovation_30%": 2.5, "Score_Impact_25%": 4.0, "Score_Social_20%": 3.0, "Score_Commercial_15%": 4.0, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 3.28, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 31, "Venture_Name": "ECOACT Tanzania", "Contact": "Christian Mwijage", "Email": "chrissmwijage@gmail.com", "Location": "Daressalaam", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya, Tanzania , Uganda ", "Plastic_Tonnes": 3500.0, "Livelihoods": 150, "Score_Innovation_30%": 2.2, "Score_Impact_25%": 4.0, "Score_Social_20%": 3.6, "Score_Commercial_15%": 3.5, "Score_Team_10%": 3.6, "WEIGHTED_SCORE": 3.27, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 65, "Venture_Name": "ORGANIZATION", "Contact": "RICHARD  MUTUKU", "Email": "lamuecohub@gmail.com", "Location": "LAMU", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Upcycling products | Digital platform", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Kenya, Rwande, Tanzania ", "Plastic_Tonnes": 650.0, "Livelihoods": 300, "Score_Innovation_30%": 2.2, "Score_Impact_25%": 3.7, "Score_Social_20%": 4.0, "Score_Commercial_15%": 3.5, "Score_Team_10%": 3.6, "WEIGHTED_SCORE": 3.27, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 79, "Venture_Name": "WasteTab", "Contact": "Nnaedozie Idoko", "Email": "idokonnadozie@gmail.com", "Location": "LEKKI-AJAH (BADORE)", "Stage": "Lab or pilot testing", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "\u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2605\u2606 GOOD SCIENCE - Tech/AI", "Target_Countries": "Cameroon, Ghana, Mali, Nigeria, Senegal", "Plastic_Tonnes": 200.0, "Livelihoods": 60, "Score_Innovation_30%": 2.8, "Score_Impact_25%": 3.7, "Score_Social_20%": 3.3, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.8, "WEIGHTED_SCORE": 3.25, "RECOMMENDATION": "CONSIDER"}, {"ID": 35, "Venture_Name": "Individual ", "Contact": "Pisaki  Agwaldeke ", "Email": "pisakiagwaldeke@gmail.com", "Location": "GUYUK LGA ", "Stage": "Early pilot in real conditions", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Pyrolysis conversion | \u2192 Fuel/energy output | \u2192 Construction materials", "SCIENCE_LEVEL": "\u2605\u2605\u2605 STRONG SCIENCE - Process Innovation", "Target_Countries": "Cameroon, Ghana, Nigeria, South Africa", "Plastic_Tonnes": 700.0, "Livelihoods": 12, "Score_Innovation_30%": 3.1, "Score_Impact_25%": 3.5, "Score_Social_20%": 3.0, "Score_Commercial_15%": 2.5, "Score_Team_10%": 4.5, "WEIGHTED_SCORE": 3.23, "RECOMMENDATION": "SHORTLIST"}, {"ID": 101, "Venture_Name": "Green Voyage", "Contact": "Dennis  Ngigi", "Email": "dennis@greenvoyage.africa", "Location": "Nairobi", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Digital platform", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Kenya, South Africa, Tanzania , Uganda , Zambia ", "Plastic_Tonnes": 5000.0, "Livelihoods": 150, "Score_Innovation_30%": 2.2, "Score_Impact_25%": 3.8, "Score_Social_20%": 3.6, "Score_Commercial_15%": 3.5, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 3.19, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 110, "Venture_Name": "Feleg Energy South Sudan", "Contact": "Elliot Tavesure Elliot Tavesure", "Email": "etavesure@gmail.com", "Location": "Juba, SOUTH SUDAN", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Bio-based polymer alternatives | \u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "South Sudan ", "Plastic_Tonnes": 1400.0, "Livelihoods": 250000, "Score_Innovation_30%": 2.4, "Score_Impact_25%": 3.5, "Score_Social_20%": 4.0, "Score_Commercial_15%": 3.5, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 3.19, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 68, "Venture_Name": "Hutland Packaging Limited", "Contact": "Brian Mangeni", "Email": "brymanqeni@gmail.com", "Location": "Kampala, Uganda", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Enzymatic plastic degradation | Bio-based polymer alternatives | \u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2605\u2605 STRONG SCIENCE - Process Innovation", "Target_Countries": "Democratic Republic of the Congo, Kenya, Rwande, South Sudan , Tanzania , Uganda ", "Plastic_Tonnes": 49.5, "Livelihoods": 31, "Score_Innovation_30%": 3.4, "Score_Impact_25%": 2.8, "Score_Social_20%": 3.0, "Score_Commercial_15%": 3.5, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 3.18, "RECOMMENDATION": "CONSIDER"}, {"ID": 16, "Venture_Name": "Ezdev Concept- Circular Blue Hubs", "Contact": "Peter Ikuewan", "Email": "petersonmultipurposevent@gmail.com", "Location": "Benin city", "Stage": "Lab or pilot testing", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Niger, Nigeria", "Plastic_Tonnes": 7000.0, "Livelihoods": 600, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 4.0, "Score_Social_20%": 3.5, "Score_Commercial_15%": 3.0, "Score_Team_10%": 4.3, "WEIGHTED_SCORE": 3.18, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 18, "Venture_Name": "INDIVIDUAL", "Contact": "Sydney Kalasa", "Email": "sydneykalasa097@gmail.com", "Location": "Lusaka", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Chemical depolymerization | \u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Kenya, Nigeria, Zambia ", "Plastic_Tonnes": 18000.0, "Livelihoods": 23000, "Score_Innovation_30%": 2.5, "Score_Impact_25%": 3.5, "Score_Social_20%": 3.5, "Score_Commercial_15%": 3.2, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 3.14, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 93, "Venture_Name": "WasteVest Technologies Limited ", "Contact": "Olabode Afurewaju", "Email": "olabodeafurewaju@gmail.com", "Location": "Abuja", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Ghana, Nigeria", "Plastic_Tonnes": 12000.0, "Livelihoods": 1000, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 3.5, "Score_Social_20%": 4.0, "Score_Commercial_15%": 3.5, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 3.13, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 14, "Venture_Name": "BluMara", "Contact": "brian gillo", "Email": "gillobrian750@gmail.com", "Location": "Mombasa", "Stage": "Lab or pilot testing", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Spectral/optical sorting", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Mauritius , South Africa, Tanzania ", "Plastic_Tonnes": 1000.0, "Livelihoods": 100, "Score_Innovation_30%": 2.4, "Score_Impact_25%": 4.0, "Score_Social_20%": 3.1, "Score_Commercial_15%": 2.5, "Score_Team_10%": 4.2, "WEIGHTED_SCORE": 3.13, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 26, "Venture_Name": "Helton Traders Limited", "Contact": "Munyasa Hellen", "Email": "munyasahellen2009@yahoo.com", "Location": "Wakiso", "Stage": "Other", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Unclear - needs review", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya, Rwande, South Sudan , Tanzania , Uganda ", "Plastic_Tonnes": 2000.0, "Livelihoods": 300, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 3.8, "Score_Social_20%": 4.0, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.8, "WEIGHTED_SCORE": 3.12, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 8, "Venture_Name": "Dunia Bora", "Contact": "Vincent Muhoro", "Email": "muhorovincent@gmail.com", "Location": "Nanyuki", "Stage": "Lab or pilot testing", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Bio-based polymer alternatives | \u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2605\u2606 GOOD SCIENCE - Mixed Tech", "Target_Countries": "Ghana, Kenya, Nigeria, Uganda ", "Plastic_Tonnes": 120.0, "Livelihoods": 30, "Score_Innovation_30%": 3.1, "Score_Impact_25%": 3.7, "Score_Social_20%": 2.5, "Score_Commercial_15%": 3.3, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 3.12, "RECOMMENDATION": "CONSIDER"}, {"ID": 75, "Venture_Name": "VERDIQ RECYCLING LIMITED", "Contact": "Samson Alo", "Email": "verdiqrecyc@gmail.com", "Location": "Ibadan", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Nigeria", "Plastic_Tonnes": 2400.0, "Livelihoods": 400, "Score_Innovation_30%": 2.2, "Score_Impact_25%": 4.0, "Score_Social_20%": 4.0, "Score_Commercial_15%": 2.2, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 3.12, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 125, "Venture_Name": "Aviyo Plant-Based Nutrition Ltd", "Contact": "Ahimbisibwe Mubarack", "Email": "ahimbisibwemubarack23@gmail.com", "Location": "Mitoma, Ruhinda, Rurehe South, Omumwino (Western Region)", "Stage": "Lab or pilot testing", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Enzymatic plastic degradation | \u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Kenya, Rwande, Tanzania , Uganda ", "Plastic_Tonnes": 100.0, "Livelihoods": 250, "Score_Innovation_30%": 2.7, "Score_Impact_25%": 3.2, "Score_Social_20%": 3.5, "Score_Commercial_15%": 2.5, "Score_Team_10%": 4.2, "WEIGHTED_SCORE": 3.1, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 30, "Venture_Name": "Organisation", "Contact": "Christopher sikuyuba", "Email": "sikuyuba2@gmail.com", "Location": "lusaka", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Bio-based polymer alternatives | \u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2605\u2606 GOOD SCIENCE - Mixed Tech", "Target_Countries": "Botswana, Lesotho, Malawi, Namibia, Zambia , Zimbabwe", "Plastic_Tonnes": 28.5, "Livelihoods": 164, "Score_Innovation_30%": 2.9, "Score_Impact_25%": 3.3, "Score_Social_20%": 3.6, "Score_Commercial_15%": 2.5, "Score_Team_10%": 2.8, "WEIGHTED_SCORE": 3.07, "RECOMMENDATION": "CONSIDER"}, {"ID": 9, "Venture_Name": "terraReform", "Contact": "Ezdras  Ashige", "Email": "ashigeezdras@gmail.com", "Location": "kampala, uganda", "Stage": "Lab or pilot testing", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "\u2192 Construction materials", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Democratic Republic of the Congo, Kenya, Uganda ", "Plastic_Tonnes": 120.0, "Livelihoods": 100, "Score_Innovation_30%": 2.2, "Score_Impact_25%": 3.4, "Score_Social_20%": 3.6, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.8, "WEIGHTED_SCORE": 3.06, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 49, "Venture_Name": "Blancosy LTD", "Contact": "ANTONY MAKANGA", "Email": "antonymakanga8@gmail.com", "Location": "NAIROBI", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Bio-based polymer alternatives | \u2192 Fuel/energy output", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Ethiopia, Kenya, Rwande, Tanzania , Uganda ", "Plastic_Tonnes": 120.0, "Livelihoods": 53, "Score_Innovation_30%": 2.5, "Score_Impact_25%": 3.2, "Score_Social_20%": 3.3, "Score_Commercial_15%": 3.5, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 3.06, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 115, "Venture_Name": "Biosanit Ltd", "Contact": "Deogratias Ndagijimana", "Email": "info@biosanit.org", "Location": "Kigali", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Bio-based polymer alternatives", "SCIENCE_LEVEL": "\u2605\u2605\u2605 STRONG SCIENCE - Process Innovation", "Target_Countries": "Democratic Republic of the Congo, Kenya, Rwande, Tanzania , Uganda ", "Plastic_Tonnes": 0.5, "Livelihoods": 3, "Score_Innovation_30%": 3.6, "Score_Impact_25%": 2.5, "Score_Social_20%": 2.7, "Score_Commercial_15%": 3.2, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 3.06, "RECOMMENDATION": "CONSIDER"}, {"ID": 10, "Venture_Name": "ZERO WASTE MUTUAL FUND ", "Contact": "Kelvin  Ogbonnaya ", "Email": "kelvinogbonnaya247@gmail.com", "Location": "Port Harcourt ", "Stage": "Early pilot in real conditions", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform | Education/awareness", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Nigeria", "Plastic_Tonnes": 11000.0, "Livelihoods": 9000, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 4.0, "Score_Social_20%": 4.0, "Score_Commercial_15%": 2.8, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 3.06, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 59, "Venture_Name": "Louisa Investments", "Contact": "Rabecca  Mwase ", "Email": "mwaserabecca88@gmail.combb", "Location": "Rumphi", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Waste collection system | Digital platform", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Malawi, Namibia, South Africa, Tanzania , Zambia , Zimbabwe", "Plastic_Tonnes": 120000.0, "Livelihoods": 150, "Score_Innovation_30%": 2.4, "Score_Impact_25%": 3.8, "Score_Social_20%": 3.6, "Score_Commercial_15%": 2.2, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 3.05, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 32, "Venture_Name": "EcoAct Nigeria Limited formally Chrisdel waste management and recycling venture ", "Contact": "Adewale Akinfolarin", "Email": "akinfolarinadewale@gmail.com", "Location": "Ondo", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "\u2192 Construction materials", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Benin, Botswana, Burkina Faso, Cameroon, Central African Republic, Chad, Cote d'Ivoire, Democratic Republic of the Congo, Egypt, Equatorial Guinea, Gambia, Ghana, Guinea-Bissau, Kenya, Liberia, Libya, Malawi, Mali, Namibia, Niger, Nigeria, Senegal, Sierra Leone, South Africa, Sudan, Tanzania , Togo, Uganda , Zambia , Zimbabwe", "Plastic_Tonnes": 250.0, "Livelihoods": 60, "Score_Innovation_30%": 1.7, "Score_Impact_25%": 3.7, "Score_Social_20%": 3.3, "Score_Commercial_15%": 3.5, "Score_Team_10%": 4.3, "WEIGHTED_SCORE": 3.05, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 132, "Venture_Name": "HER BINS", "Contact": "Kelvin Mulama", "Email": "dukatechsolutions@gmail.com", "Location": "Nairobi,Kenya.", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Kenya, Nigeria, South Africa", "Plastic_Tonnes": 25.0, "Livelihoods": 250, "Score_Innovation_30%": 2.7, "Score_Impact_25%": 3.0, "Score_Social_20%": 4.0, "Score_Commercial_15%": 1.7, "Score_Team_10%": 4.1, "WEIGHTED_SCORE": 3.03, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 88, "Venture_Name": "WAZZ CONTRACTOR UGANDA LIMITED", "Contact": "WAMAZEMBE JOVAN", "Email": "jwamazembe@gmail.com", "Location": "Mbale", "Stage": "Scaling/ Replication Phase", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform | Education/awareness", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Burundi, Equatorial Guinea, Kenya, Sudan, Uganda ", "Plastic_Tonnes": 500.0, "Livelihoods": 300, "Score_Innovation_30%": 1.5, "Score_Impact_25%": 3.5, "Score_Social_20%": 4.0, "Score_Commercial_15%": 4.0, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 3.03, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 118, "Venture_Name": "SakaTaka", "Contact": "Kariuki Maina", "Email": "kariuki@sakataka.co.ke", "Location": "Nairobi", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Ethiopia, Ghana, Kenya, Nigeria, Rwande, South Africa, Tanzania , Uganda , Zambia ", "Plastic_Tonnes": 2000.0, "Livelihoods": 200, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 3.8, "Score_Social_20%": 3.5, "Score_Commercial_15%": 3.5, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 3.01, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 33, "Venture_Name": "NEDUCHUKS MULTI BUSINESS CONCEPT", "Contact": "EGWUAGU CHUKWUDI", "Email": "blessingchinedu574@gmail.com", "Location": "Ekiti State, Nigeria", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Benin, Cameroon, Chad, Cote d'Ivoire, Ghana, Niger, Nigeria, Senegal, Togo", "Plastic_Tonnes": 10000000.0, "Livelihoods": 10000, "Score_Innovation_30%": 1.6, "Score_Impact_25%": 4.3, "Score_Social_20%": 4.0, "Score_Commercial_15%": 1.7, "Score_Team_10%": 4.0, "WEIGHTED_SCORE": 3.01, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 43, "Venture_Name": "Alliance for Rural Innovations in Climate and Conservation Action -afRICCA: Project Title:   Plastics to Purpose: Waste to wonder: If Plastics were living Trees", "Contact": "Collins  Manyasi ", "Email": "africcake@gmail.com", "Location": "Nairobi ", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Digital platform | Education/awareness", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya", "Plastic_Tonnes": 180000.0, "Livelihoods": 3000, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 3.5, "Score_Social_20%": 4.0, "Score_Commercial_15%": 2.2, "Score_Team_10%": 4.0, "WEIGHTED_SCORE": 3.01, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 127, "Venture_Name": "Renoverde ", "Contact": "Chinoza Eze", "Email": "michealamobi7@gmail.com", "Location": "Bissau ", "Stage": "Lab or pilot testing", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "\u2192 Construction materials", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Guinea-Bissau, Nigeria", "Plastic_Tonnes": 120.0, "Livelihoods": 100, "Score_Innovation_30%": 2.2, "Score_Impact_25%": 3.4, "Score_Social_20%": 3.6, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.98, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 69, "Venture_Name": "AGRIWEZESHA ", "Contact": "LINUS  CORNERY ANDREA CORNERY", "Email": "corneryl@yahoo.com", "Location": "DAR ES SALAAM", "Stage": "Idea Phase/ Concept ", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "\u2192 Packaging alternatives", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Burundi, Democratic Republic of the Congo, Kenya, Rwande, Tanzania , Uganda ", "Plastic_Tonnes": 6000.0, "Livelihoods": 300, "Score_Innovation_30%": 1.7, "Score_Impact_25%": 4.3, "Score_Social_20%": 4.0, "Score_Commercial_15%": 2.0, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.98, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 76, "Venture_Name": "Green Roof Africa ", "Contact": "IRADUKUNDA Kevin Jonathan", "Email": "ijonatha@andrew.cmu.edu", "Location": "Kigali", "Stage": "Lab or pilot testing", "Legal_Status": "University / Research spin-out", "WHAT_THEY_DO": "\u2192 Construction materials | \u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Kenya, Rwande, Tanzania , Uganda ", "Plastic_Tonnes": 300.0, "Livelihoods": 35, "Score_Innovation_30%": 2.2, "Score_Impact_25%": 3.7, "Score_Social_20%": 3.0, "Score_Commercial_15%": 2.8, "Score_Team_10%": 3.8, "WEIGHTED_SCORE": 2.98, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 22, "Venture_Name": "Biodegradable plastic like materials ", "Contact": "Dr.Mostafa f.abdelmaksoud", "Email": "mostafa_gomaa338@yahoo.com", "Location": "Giza", "Stage": "Lab or pilot testing", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Nanocomposite materials | Bio-based polymer alternatives | Biodegradable materials R&D", "SCIENCE_LEVEL": "\u2605\u2605\u2605 STRONG SCIENCE - Process Innovation", "Target_Countries": "Egypt", "Plastic_Tonnes": 2.0, "Livelihoods": 10, "Score_Innovation_30%": 3.5, "Score_Impact_25%": 2.7, "Score_Social_20%": 2.5, "Score_Commercial_15%": 2.5, "Score_Team_10%": 3.7, "WEIGHTED_SCORE": 2.97, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 47, "Venture_Name": "Plastic for cash", "Contact": "Faozan Shuaibu ", "Email": "yahyancy24@gmail.com", "Location": "Kano", "Stage": "Early-Market Entry", "Legal_Status": "Informal team", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "\u2606\u2606\u2606 CONVENTIONAL - Generic", "Target_Countries": "Nigeria", "Plastic_Tonnes": 6875.0, "Livelihoods": 1488, "Score_Innovation_30%": 1.4, "Score_Impact_25%": 4.0, "Score_Social_20%": 4.0, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.97, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 114, "Venture_Name": "Individual", "Contact": "Siyabulela Mankahla", "Email": "siyabulela.mankahla1997@gmail.com", "Location": "Port Elizabeth", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Microbial/bacterial processing", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Eswatini, Lesotho, Mauritius , South Africa, Zimbabwe", "Plastic_Tonnes": 1500.0, "Livelihoods": 100, "Score_Innovation_30%": 2.5, "Score_Impact_25%": 3.8, "Score_Social_20%": 3.6, "Score_Commercial_15%": 1.7, "Score_Team_10%": 2.8, "WEIGHTED_SCORE": 2.95, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 98, "Venture_Name": "OUTLIER  VENTURE LAB", "Contact": "olawunmi olatunji", "Email": "outlierventurelab@gmail.com", "Location": "lagos", "Stage": "Early-Market Entry", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "Waste collection system | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Nigeria", "Plastic_Tonnes": 1500.0, "Livelihoods": 300, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 3.5, "Score_Social_20%": 4.0, "Score_Commercial_15%": 3.0, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 2.94, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 111, "Venture_Name": "Thy Great Achievers waste to wealth project", "Contact": "THY GREAT  ACHIEVERS", "Email": "thygreatachievers2023@gmail.com", "Location": "Mombasa, kisauni sub county, Junda ward", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Upcycling products | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya", "Plastic_Tonnes": 300.0, "Livelihoods": 150, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 3.4, "Score_Social_20%": 3.6, "Score_Commercial_15%": 3.5, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.94, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 126, "Venture_Name": "ZERO DECHETS PLASTIQUES EN CI", "Contact": "seka rock samuel yapi", "Email": "yaprock515@gmail.com", "Location": "Abidjan", "Stage": "Scaling/ Replication Phase", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Burkina Faso, Cote d'Ivoire, Ghana", "Plastic_Tonnes": 500000.0, "Livelihoods": 100, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 3.5, "Score_Social_20%": 3.1, "Score_Commercial_15%": 4.0, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.94, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 48, "Venture_Name": "SeaCo", "Contact": "Patricia Uma", "Email": "umapnnenna@gmailc.om", "Location": "Abuja", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Informal team", "WHAT_THEY_DO": "\u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Ghana, Nigeria", "Plastic_Tonnes": 10.0, "Livelihoods": 525, "Score_Innovation_30%": 2.7, "Score_Impact_25%": 2.7, "Score_Social_20%": 4.0, "Score_Commercial_15%": 2.0, "Score_Team_10%": 3.5, "WEIGHTED_SCORE": 2.94, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 19, "Venture_Name": "Umurava Clear Ltd ", "Contact": "Jean Elie Hakizimana", "Email": "jeaneliehakizimana@gmail.com", "Location": "Kigali", "Stage": "Early pilot in real conditions", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Bio-based polymer alternatives | \u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2605\u2605 STRONG SCIENCE - Process Innovation", "Target_Countries": "Rwande", "Plastic_Tonnes": 74.0, "Livelihoods": 8000000, "Score_Innovation_30%": 3.2, "Score_Impact_25%": 2.5, "Score_Social_20%": 3.5, "Score_Commercial_15%": 3.0, "Score_Team_10%": 2.0, "WEIGHTED_SCORE": 2.94, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 131, "Venture_Name": "Hoglet Recycling ", "Contact": "Olaoye Olawale", "Email": "walehunts@gmail.com", "Location": "Ibadan", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "\u2192 Construction materials", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Namibia, Nigeria, Rwande", "Plastic_Tonnes": 100.0, "Livelihoods": 30, "Score_Innovation_30%": 2.6, "Score_Impact_25%": 3.4, "Score_Social_20%": 3.0, "Score_Commercial_15%": 2.2, "Score_Team_10%": 3.8, "WEIGHTED_SCORE": 2.94, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 90, "Venture_Name": "Eco technology ", "Contact": "Delali Ameyibor", "Email": "delaameyibor42@gmail.com", "Location": "Accra", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "\u2192 Construction materials", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Ghana, Kenya, Nigeria, Togo", "Plastic_Tonnes": 1200.0, "Livelihoods": 180, "Score_Innovation_30%": 2.2, "Score_Impact_25%": 4.3, "Score_Social_20%": 3.1, "Score_Commercial_15%": 1.7, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.91, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 104, "Venture_Name": "Blue Economy Youth International", "Contact": "Mercy John", "Email": "mercyj58@gmail.com", "Location": "Eastern", "Stage": "Lab or pilot testing", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Upcycling products | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya", "Plastic_Tonnes": 1000.0, "Livelihoods": 500, "Score_Innovation_30%": 1.7, "Score_Impact_25%": 3.5, "Score_Social_20%": 4.0, "Score_Commercial_15%": 2.8, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.91, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 121, "Venture_Name": "GREENPACT AFRICA LTD", "Contact": "Julie Ajayi", "Email": "julie.woleajayi@yahoo.com", "Location": "JOS", "Stage": "Early pilot in real conditions", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Benin, Cameroon, Ghana, Nigeria", "Plastic_Tonnes": 100.0, "Livelihoods": 2000, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 3.2, "Score_Social_20%": 4.0, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.1, "WEIGHTED_SCORE": 2.9, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 137, "Venture_Name": "Takabank ", "Contact": "Julius  Ooko", "Email": "julianimusik@gmail.com", "Location": "nairobi", "Stage": "Early-Market Entry", "Legal_Status": "Informal team", "WHAT_THEY_DO": "\u2192 Packaging alternatives", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya", "Plastic_Tonnes": 1300.0, "Livelihoods": 400, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 3.5, "Score_Social_20%": 3.5, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.9, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 138, "Venture_Name": "Ele-Collection", "Contact": "Simon Teede", "Email": "simon@elecollection.co", "Location": "Victoria Falls", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "\u2192 Packaging alternatives", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Zambia , Zimbabwe", "Plastic_Tonnes": 480.0, "Livelihoods": 200, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 2.9, "Score_Social_20%": 3.5, "Score_Commercial_15%": 3.5, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.88, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 136, "Venture_Name": "RISING BEYOND THE BOTTLE ", "Contact": "Ivonne  Gedah ", "Email": "gedahivonne@gmail.com", "Location": "HOMA BAY", "Stage": "Idea Phase/ Concept ", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya, Tanzania , Uganda ", "Plastic_Tonnes": 12000.0, "Livelihoods": 2000, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 3.5, "Score_Social_20%": 4.0, "Score_Commercial_15%": 2.0, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.88, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 52, "Venture_Name": "DercolBags Packaging Limited Company ", "Contact": "Derrick  Sarfo ", "Email": "sarfoderrick@spexafrica.com", "Location": "Accra ", "Stage": "Early pilot in real conditions", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "\u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Cote d'Ivoire, Ethiopia, Ghana, Kenya, Nigeria, Rwande, South Africa", "Plastic_Tonnes": 168.0, "Livelihoods": 50, "Score_Innovation_30%": 1.9, "Score_Impact_25%": 3.7, "Score_Social_20%": 2.8, "Score_Commercial_15%": 3.3, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.88, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 61, "Venture_Name": "Skilpack Ltd", "Contact": "Collins Twebaze", "Email": "collinstwebazeb@gmail.com", "Location": "Jinja", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "\u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Democratic Republic of the Congo, Ghana, Kenya, Nigeria, Other, South Africa, Tanzania , Uganda ", "Plastic_Tonnes": 2.0, "Livelihoods": 1000, "Score_Innovation_30%": 2.4, "Score_Impact_25%": 2.5, "Score_Social_20%": 3.5, "Score_Commercial_15%": 3.2, "Score_Team_10%": 3.5, "WEIGHTED_SCORE": 2.88, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 106, "Venture_Name": "Mckingtorch Zambia", "Contact": "Racheal Tembo", "Email": "rachealtembo76@gmail.com", "Location": "Lusaka", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Upcycling products | Digital platform", "SCIENCE_LEVEL": "\u2606\u2606\u2606 CONVENTIONAL - Generic", "Target_Countries": "Zambia ", "Plastic_Tonnes": 500.0, "Livelihoods": 300, "Score_Innovation_30%": 1.4, "Score_Impact_25%": 3.2, "Score_Social_20%": 4.0, "Score_Commercial_15%": 3.5, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.88, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 74, "Venture_Name": "Demay Saniafrica", "Contact": "Micheal Ewusie Essel", "Email": "esselmichealewusie@gmail.com", "Location": "Takoradi/western region of Ghana", "Stage": "Other", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform | Education/awareness", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Ghana", "Plastic_Tonnes": 240.0, "Livelihoods": 55, "Score_Innovation_30%": 1.9, "Score_Impact_25%": 3.4, "Score_Social_20%": 3.3, "Score_Commercial_15%": 2.7, "Score_Team_10%": 3.8, "WEIGHTED_SCORE": 2.87, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 66, "Venture_Name": "Hyve Management Systems", "Contact": "Edwin Akuffo", "Email": "hymgsys@gmail.com", "Location": "Russia-Dansoman", "Stage": "Lab or pilot testing", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Burkina Faso, Cote d'Ivoire, Ghana, Nigeria, Togo", "Plastic_Tonnes": 257.4, "Livelihoods": 5000000, "Score_Innovation_30%": 1.7, "Score_Impact_25%": 3.2, "Score_Social_20%": 3.5, "Score_Commercial_15%": 3.0, "Score_Team_10%": 4.0, "WEIGHTED_SCORE": 2.86, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 73, "Venture_Name": "Collarosta Technologies and Crafts", "Contact": "Ivan Omondi", "Email": "ivanotieno44@gmail.com", "Location": "Kisumu", "Stage": "Lab or pilot testing", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Mechanical recycling", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya, Tanzania , Uganda ", "Plastic_Tonnes": 400.0, "Livelihoods": 500, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 2.9, "Score_Social_20%": 4.0, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.85, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 50, "Venture_Name": "Tororo cocacola depot ", "Contact": "Oloki Daniel ", "Email": "olokidan1995@gmail.com", "Location": "Mbale", "Stage": "Lab or pilot testing", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Waste collection system | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya, Sudan, Tanzania , Uganda ", "Plastic_Tonnes": 200.0, "Livelihoods": 200, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 3.2, "Score_Social_20%": 4.0, "Score_Commercial_15%": 2.5, "Score_Team_10%": 2.8, "WEIGHTED_SCORE": 2.85, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 87, "Venture_Name": "QUALITY INPUT ENTERPRISE", "Contact": "Francis Newlands", "Email": "newlandsfrancis@yahoo.com", "Location": "", "Stage": "Early pilot in real conditions", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "\u2192 Packaging alternatives", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Ghana", "Plastic_Tonnes": 12000.0, "Livelihoods": 25, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 4.0, "Score_Social_20%": 3.0, "Score_Commercial_15%": 3.0, "Score_Team_10%": 2.5, "WEIGHTED_SCORE": 2.84, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 21, "Venture_Name": "Individual", "Contact": "Vuyiswa Mojela", "Email": "vuyiswamojela@gmail.com", "Location": "Gaborone", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Biodegradable materials R&D | \u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Botswana", "Plastic_Tonnes": 1700.0, "Livelihoods": 1700, "Score_Innovation_30%": 1.9, "Score_Impact_25%": 3.5, "Score_Social_20%": 4.0, "Score_Commercial_15%": 2.2, "Score_Team_10%": 2.5, "WEIGHTED_SCORE": 2.83, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 20, "Venture_Name": "WA MUKINA GROUPE", "Contact": "Daniel Wa Mukina", "Email": "Wamukinagroupesarl@gmail.com", "Location": "Lubumbashi", "Stage": "Early pilot in real conditions", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Mechanical recycling | Digital platform | Education/awareness", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Burkina Faso, Democratic Republic of the Congo, Senegal, Tanzania , Zambia ", "Plastic_Tonnes": 30.0, "Livelihoods": 300, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 2.8, "Score_Social_20%": 4.0, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.82, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 12, "Venture_Name": "ASSOCIATION SONGTAABA POUR LE DEVELOPPEMENT-ASTD", "Contact": "ILBOUDO Omer Jeanin Wendkaato", "Email": "songtaabainfo@gmail.com", "Location": "Ouagadougou", "Stage": "Lab or pilot testing", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "Pyrolysis conversion | \u2192 Fuel/energy output | \u2192 Construction materials", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Burkina Faso", "Plastic_Tonnes": 50.0, "Livelihoods": 150, "Score_Innovation_30%": 2.5, "Score_Impact_25%": 2.5, "Score_Social_20%": 3.6, "Score_Commercial_15%": 2.8, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.82, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 108, "Venture_Name": "Tatirano Social Enterprise", "Contact": "Harry Chaplin", "Email": "harry@tatirano.org", "Location": "Fort-Dauphin", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Unclear - needs review", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Madagascar", "Plastic_Tonnes": 30.0, "Livelihoods": 200, "Score_Innovation_30%": 1.5, "Score_Impact_25%": 3.0, "Score_Social_20%": 3.5, "Score_Commercial_15%": 3.5, "Score_Team_10%": 3.8, "WEIGHTED_SCORE": 2.8, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 5, "Venture_Name": "Individual", "Contact": "Engr. Dr. Christopher Igwe Idumah", "Email": "idugoldengate@gmail.com", "Location": "Abakaliki", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "\u2192 Construction materials", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Chad, Niger, Nigeria", "Plastic_Tonnes": 6000.0, "Livelihoods": 10, "Score_Innovation_30%": 2.4, "Score_Impact_25%": 3.5, "Score_Social_20%": 3.0, "Score_Commercial_15%": 1.7, "Score_Team_10%": 3.5, "WEIGHTED_SCORE": 2.8, "RECOMMENDATION": "MAYBE - Limited science"}, {"ID": 83, "Venture_Name": "OPTIMUM GOAL", "Contact": "Steven  Lahai", "Email": "stevelahai@yahoo.co.uk", "Location": "Kenema", "Stage": "Scaling/ Replication Phase", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "\u2192 Construction materials", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Sierra Leone", "Plastic_Tonnes": 50.0, "Livelihoods": 500, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 2.5, "Score_Social_20%": 4.0, "Score_Commercial_15%": 3.5, "Score_Team_10%": 2.5, "WEIGHTED_SCORE": 2.8, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 36, "Venture_Name": "Waste to art project", "Contact": "Steve Orowo", "Email": "steveomondi13@gmail.com", "Location": "Kisumu", "Stage": "Scaling/ Replication Phase", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Mechanical recycling", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya", "Plastic_Tonnes": 25.0, "Livelihoods": 120, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 3.0, "Score_Social_20%": 3.6, "Score_Commercial_15%": 3.2, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.79, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 82, "Venture_Name": "Burundian Association For Development, Democracy and Human Rights \"AB3D\"", "Contact": "Sylv\u00e8re NIBARUTA", "Email": "ab3d039@gmail.com", "Location": "Bujumbura", "Stage": "Early pilot in real conditions", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "Bio-based polymer alternatives", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Burundi", "Plastic_Tonnes": 60.0, "Livelihoods": 35, "Score_Innovation_30%": 2.7, "Score_Impact_25%": 2.5, "Score_Social_20%": 3.0, "Score_Commercial_15%": 2.8, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.79, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 92, "Venture_Name": "At Hause Limited", "Contact": "Ashiraf Nsibambi Kyabainze", "Email": "ashiraf35@gmail.com", "Location": "Kampala", "Stage": "Early pilot in real conditions", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Unclear - needs review", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya, Uganda ", "Plastic_Tonnes": 525.0, "Livelihoods": 30000, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 3.2, "Score_Social_20%": 3.5, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.79, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 102, "Venture_Name": "Plastic Pollution Protection ", "Contact": "Kakandelwa John", "Email": "poweringyoung@gmail.com", "Location": "Livingstone ", "Stage": "Idea Phase/ Concept ", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "Waste collection system | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Zambia ", "Plastic_Tonnes": 5000.0, "Livelihoods": 100, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 3.5, "Score_Social_20%": 3.6, "Score_Commercial_15%": 2.0, "Score_Team_10%": 3.5, "WEIGHTED_SCORE": 2.79, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 103, "Venture_Name": "Zero Coal, Ltda.", "Contact": "L\u00e9nio Lisboa", "Email": "leniolisboa182027@gmail.com", "Location": "179009", "Stage": "Lab or pilot testing", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Waste collection system", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Mozambique", "Plastic_Tonnes": 100.0, "Livelihoods": 1000, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 2.9, "Score_Social_20%": 4.0, "Score_Commercial_15%": 2.5, "Score_Team_10%": 2.8, "WEIGHTED_SCORE": 2.78, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 11, "Venture_Name": "Veldtschoen waste management solutions ", "Contact": "Theuhill Truseph Veldtschoen", "Email": "jubileefamilypark@gmail.com", "Location": "Windhoek, Namibia", "Stage": "Early pilot in real conditions", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Angola, Botswana, Eswatini, Lesotho, Madagascar, Mauritius , Mozambique, Namibia, South Africa, Zambia , Zimbabwe", "Plastic_Tonnes": 100.0, "Livelihoods": 50, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 3.2, "Score_Social_20%": 3.3, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.78, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 2, "Venture_Name": "Individual", "Contact": "John Adebayo", "Email": "adebayojohn228@gmail.com", "Location": "Yagba East", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling", "SCIENCE_LEVEL": "\u2605\u2605\u2606 GOOD SCIENCE - Tech/AI", "Target_Countries": "Cameroon, Chad, Ghana, Nigeria", "Plastic_Tonnes": 350.0, "Livelihoods": 45, "Score_Innovation_30%": 2.6, "Score_Impact_25%": 3.7, "Score_Social_20%": 3.0, "Score_Commercial_15%": 1.7, "Score_Team_10%": 2.2, "WEIGHTED_SCORE": 2.78, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 71, "Venture_Name": "Blue Earth Lab (originating from Africa Blue Food Festival)", "Contact": "Tatiana Joan Wandar", "Email": "tatiana0772469204@gmail.com", "Location": "Kampala", "Stage": "Early pilot in real conditions", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "Mechanical recycling", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya, Tanzania , Uganda ", "Plastic_Tonnes": 120.0, "Livelihoods": 60, "Score_Innovation_30%": 1.7, "Score_Impact_25%": 3.4, "Score_Social_20%": 3.3, "Score_Commercial_15%": 2.8, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.77, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 27, "Venture_Name": "Star Health Improvement and Livelihood Development Program Ltd (Star Help Uganda) ", "Contact": "Sam Kazibwe", "Email": "keizsamray@gmail.com", "Location": "Kampala", "Stage": "Idea Phase/ Concept ", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Uganda ", "Plastic_Tonnes": 490.0, "Livelihoods": 150, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 3.4, "Score_Social_20%": 3.6, "Score_Commercial_15%": 2.0, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.77, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 124, "Venture_Name": "Corridors Of Peace Humanitarian Foundation- Nigeria Africa ", "Contact": "Stella Egwu", "Email": "corridorsofpeacenigeria@gmail.com", "Location": "Owerri", "Stage": "Early pilot in real conditions", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "\u2192 Construction materials", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Chad, Nigeria", "Plastic_Tonnes": 7.0, "Livelihoods": 1500, "Score_Innovation_30%": 2.4, "Score_Impact_25%": 2.2, "Score_Social_20%": 4.0, "Score_Commercial_15%": 2.8, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 2.76, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 116, "Venture_Name": "PROCARE INTERNATIONAL LIMITED", "Contact": "MOSES  MARAGIA", "Email": "kingchick2000@gmail.com", "Location": "Nairobi", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "\u2192 Construction materials | \u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Kenya", "Plastic_Tonnes": 100.0, "Livelihoods": 50, "Score_Innovation_30%": 2.2, "Score_Impact_25%": 2.9, "Score_Social_20%": 3.3, "Score_Commercial_15%": 2.5, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.75, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 29, "Venture_Name": "Youth for Environment Initiative/Waste to Worth: Scaling Community-Based Plastic Circularity in Urban and Peri-Urban Africa", "Contact": "SADIQ ABUBAKAR", "Email": "y4environment@gmail.com", "Location": "Yola South", "Stage": "Early pilot in real conditions", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Nigeria", "Plastic_Tonnes": 50.0, "Livelihoods": 60, "Score_Innovation_30%": 2.4, "Score_Impact_25%": 2.5, "Score_Social_20%": 3.3, "Score_Commercial_15%": 2.8, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.75, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 23, "Venture_Name": "PlastiRevive", "Contact": "George Frimpong", "Email": "frimponggeorgekwame@gmail.com", "Location": "Konongo", "Stage": "Early pilot in real conditions", "Legal_Status": "Informal team", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Burkina Faso, Cote d'Ivoire, Ghana", "Plastic_Tonnes": 400.0, "Livelihoods": 50, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 2.9, "Score_Social_20%": 3.3, "Score_Commercial_15%": 2.8, "Score_Team_10%": 3.5, "WEIGHTED_SCORE": 2.75, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 53, "Venture_Name": "Individual ", "Contact": "Isah Yusuf", "Email": "isahyusuf32@gmail.com", "Location": "GUSAU", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Nigeria", "Plastic_Tonnes": 1000.0, "Livelihoods": 150, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 4.0, "Score_Social_20%": 3.6, "Score_Commercial_15%": 1.7, "Score_Team_10%": 2.2, "WEIGHTED_SCORE": 2.74, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 3, "Venture_Name": "Individual ", "Contact": "Isah Yusuf", "Email": "isahyusuf32@gmail.com", "Location": "GUSAU", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Nigeria", "Plastic_Tonnes": 1000.0, "Livelihoods": 150, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 4.0, "Score_Social_20%": 3.6, "Score_Commercial_15%": 1.7, "Score_Team_10%": 2.2, "WEIGHTED_SCORE": 2.74, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 129, "Venture_Name": "Ngirinshuti Jonas", "Contact": "Ngirinshuti Jonas", "Email": "ngiras2020@gmail.com", "Location": "Kamembe", "Stage": "Scaling/ Replication Phase", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Unclear - needs review", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Mozambique, Other, Rwande, South Africa, Tanzania , Uganda ", "Plastic_Tonnes": 100.0, "Livelihoods": 100, "Score_Innovation_30%": 1.5, "Score_Impact_25%": 3.2, "Score_Social_20%": 3.6, "Score_Commercial_15%": 3.2, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 2.72, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 62, "Venture_Name": "Tranformative project services ", "Contact": "James  Omongot ", "Email": "jamesomongot60@gmail.com", "Location": "Kampala", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Unclear - needs review", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Uganda ", "Plastic_Tonnes": 250.0, "Livelihoods": 2000, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 2.9, "Score_Social_20%": 3.5, "Score_Commercial_15%": 2.2, "Score_Team_10%": 3.5, "WEIGHTED_SCORE": 2.71, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 113, "Venture_Name": "Precifarm", "Contact": "David SAYIA", "Email": "david.givondoh@gmail.com", "Location": "Eldoret", "Stage": "Early pilot in real conditions", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya, Tanzania , Uganda ", "Plastic_Tonnes": 60.0, "Livelihoods": 2500, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 2.5, "Score_Social_20%": 3.5, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.8, "WEIGHTED_SCORE": 2.7, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 51, "Venture_Name": "Individual ", "Contact": "Togar Woodor", "Email": "woodortogar75@gmail.com", "Location": "Painesville city", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Waste collection system | Digital platform | Education/awareness", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Liberia", "Plastic_Tonnes": 250.0, "Livelihoods": 40, "Score_Innovation_30%": 2.4, "Score_Impact_25%": 2.9, "Score_Social_20%": 3.0, "Score_Commercial_15%": 1.7, "Score_Team_10%": 4.0, "WEIGHTED_SCORE": 2.7, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 13, "Venture_Name": "EcoLagos - Smart waste management and recycling platform ", "Contact": "Israel Odutola", "Email": "odutolaisreal11@gmail.com", "Location": "Lagos", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Ghana, Nigeria", "Plastic_Tonnes": 500.0, "Livelihoods": 50000, "Score_Innovation_30%": 1.5, "Score_Impact_25%": 3.2, "Score_Social_20%": 3.5, "Score_Commercial_15%": 3.2, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 2.7, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 60, "Venture_Name": "Magushana Mzondi General Services ", "Contact": "Samuel Zwelimangele  Magushana ", "Email": "magussz3@hotmail.co.za", "Location": "Johannesburg ", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "\u2192 Construction materials", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "South Africa", "Plastic_Tonnes": 5000.0, "Livelihoods": 20, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 3.5, "Score_Social_20%": 2.5, "Score_Commercial_15%": 3.2, "Score_Team_10%": 2.8, "WEIGHTED_SCORE": 2.67, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 95, "Venture_Name": "BottleFarm : Turning Plastic Waste into Urban Food Systems", "Contact": "Nkem Achia", "Email": "nkemachia05@gmail.com", "Location": "Buea", "Stage": "Lab or pilot testing", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Cameroon", "Plastic_Tonnes": 15.0, "Livelihoods": 42, "Score_Innovation_30%": 2.3, "Score_Impact_25%": 2.7, "Score_Social_20%": 3.0, "Score_Commercial_15%": 2.5, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.67, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 109, "Venture_Name": "Individual ", "Contact": "Mutiat Oyesomi", "Email": "oyesomiadetayo@gmail.com", "Location": "Abeokuta ", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "\u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2605\u2606 GOOD SCIENCE - Tech/AI", "Target_Countries": "Benin, Burkina Faso, Cabo Verde, Cameroon, Chad, Cote d'Ivoire, Gambia, Ghana, Niger, Nigeria, Senegal, Sierra Leone, Togo", "Plastic_Tonnes": 12.0, "Livelihoods": 25, "Score_Innovation_30%": 2.8, "Score_Impact_25%": 3.0, "Score_Social_20%": 2.5, "Score_Commercial_15%": 1.7, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.67, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 42, "Venture_Name": "A.M DIGITAL HEALTH HUB", "Contact": "HASSAN AL-MUJTABA  JA'AFAR", "Email": "hassan@amdigitalhealthhub.com.ng", "Location": "BAUCHI", "Stage": "Lab or pilot testing", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Nigeria", "Plastic_Tonnes": 50.0, "Livelihoods": 10, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 2.5, "Score_Social_20%": 3.0, "Score_Commercial_15%": 3.3, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.65, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 67, "Venture_Name": "Waste2Work ", "Contact": "Andrew  Ddembe", "Email": "ddembe.andrew@gmail.com", "Location": "Kampala", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "\u2192 Construction materials | \u2192 Packaging alternatives", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya, Uganda ", "Plastic_Tonnes": 150.0, "Livelihoods": 12, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 2.9, "Score_Social_20%": 3.0, "Score_Commercial_15%": 2.2, "Score_Team_10%": 4.0, "WEIGHTED_SCORE": 2.65, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 4, "Venture_Name": "Individual ", "Contact": "Felix James", "Email": "jamesfelixpeter02@gmail.com", "Location": "Port Harcourt", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Enzymatic plastic degradation", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Cameroon, Ghana, Nigeria", "Plastic_Tonnes": 20.0, "Livelihoods": 958, "Score_Innovation_30%": 2.5, "Score_Impact_25%": 2.5, "Score_Social_20%": 4.0, "Score_Commercial_15%": 1.7, "Score_Team_10%": 2.2, "WEIGHTED_SCORE": 2.65, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 45, "Venture_Name": "Sustainable food systems and food waste reduction ", "Contact": "Dahiru  Garba ", "Email": "garbad59@gmail.com", "Location": "Bauchi ", "Stage": "Early pilot in real conditions", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Unclear - needs review", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Nigeria", "Plastic_Tonnes": 5000.0, "Livelihoods": 10000, "Score_Innovation_30%": 1.4, "Score_Impact_25%": 3.5, "Score_Social_20%": 3.5, "Score_Commercial_15%": 2.5, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 2.64, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 117, "Venture_Name": "SMART FARMING", "Contact": "Fr\u00e9d\u00e9ric Ntakimazi", "Email": "fredntakim@gmail.com", "Location": "Kabuye, Bukemba, Rutana", "Stage": "Early pilot in real conditions", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Burundi, Democratic Republic of the Congo, Rwande, Tanzania , Uganda ", "Plastic_Tonnes": 5.0, "Livelihoods": 100, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 2.5, "Score_Social_20%": 3.6, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.63, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 99, "Venture_Name": "Souriant Training center ", "Contact": "DUSENGIMANA INNOCENT", "Email": "souriant2050@gmail.com", "Location": "Gisenyi", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Informal team", "WHAT_THEY_DO": "\u2192 Construction materials", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Rwande", "Plastic_Tonnes": 70.0, "Livelihoods": 70, "Score_Innovation_30%": 2.4, "Score_Impact_25%": 3.0, "Score_Social_20%": 3.3, "Score_Commercial_15%": 2.0, "Score_Team_10%": 2.0, "WEIGHTED_SCORE": 2.63, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 122, "Venture_Name": "REFA - Renew Eco Fuel from Africa to the world", "Contact": "Lysette KEPTA KOUAMOU", "Email": "lysette.kepta@2ie-edu.org", "Location": "Ouagadougou", "Stage": "Lab or pilot testing", "Legal_Status": "University / Research spin-out", "WHAT_THEY_DO": "Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Burkina Faso, Cameroon, Other", "Plastic_Tonnes": 350.0, "Livelihoods": 100, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 2.9, "Score_Social_20%": 3.1, "Score_Commercial_15%": 2.8, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.61, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 105, "Venture_Name": "individual", "Contact": "munir minas", "Email": "munminaz123@gmail.com", "Location": "mombasa", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Ethiopia, Kenya, Somalia, Sudan, Tanzania , Uganda ", "Plastic_Tonnes": 50.0, "Livelihoods": 150, "Score_Innovation_30%": 2.2, "Score_Impact_25%": 2.8, "Score_Social_20%": 3.6, "Score_Commercial_15%": 1.7, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 2.6, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 58, "Venture_Name": "Individual ", "Contact": "Sbhat Workineh", "Email": "sbhatkassa29@gmail.com", "Location": "Injibara", "Stage": "Lab or pilot testing", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "\u2192 Construction materials | \u2192 Packaging alternatives", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Djibouti, Morocco, South Africa, Tanzania ", "Plastic_Tonnes": 60.0, "Livelihoods": 20, "Score_Innovation_30%": 2.2, "Score_Impact_25%": 2.8, "Score_Social_20%": 3.0, "Score_Commercial_15%": 2.5, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 2.6, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 39, "Venture_Name": "Ecoelectrical ", "Contact": "babatunde olunloyo", "Email": "baba4dollar@gmail.com", "Location": "ibadan", "Stage": "Early-Market Entry", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Education/awareness", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Angola, Burkina Faso, Cote d'Ivoire, Gambia, Kenya, Liberia, Libya, Morocco, Nigeria, Senegal, Seychelles, South Africa, Tanzania , Zambia , Zimbabwe", "Plastic_Tonnes": 20.0, "Livelihoods": 85, "Score_Innovation_30%": 1.5, "Score_Impact_25%": 3.3, "Score_Social_20%": 3.3, "Score_Commercial_15%": 2.7, "Score_Team_10%": 2.5, "WEIGHTED_SCORE": 2.59, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 72, "Venture_Name": "SozoFix ", "Contact": "Rairo Mukamuri", "Email": "rairo@sozofix.tech", "Location": "Harare", "Stage": "Early pilot in real conditions", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Education/awareness", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya, South Africa, Tanzania , Zimbabwe", "Plastic_Tonnes": 15.0, "Livelihoods": 20, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 2.5, "Score_Social_20%": 3.0, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.8, "WEIGHTED_SCORE": 2.59, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 130, "Venture_Name": "HOPECYCLE SOLUTIONS", "Contact": "Micheal  Mukwala", "Email": "hopecyclesolutions@gmail.com", "Location": "", "Stage": "Early pilot in real conditions", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Spectral/optical sorting", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Zambia ", "Plastic_Tonnes": 1.0, "Livelihoods": 35, "Score_Innovation_30%": 2.2, "Score_Impact_25%": 2.2, "Score_Social_20%": 3.0, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.59, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 28, "Venture_Name": "ecoWealth Solutions", "Contact": "KINGSLEY ENECHUKWU", "Email": "ecowealthsolutions@gmail.com", "Location": "PORT HARCOURT", "Stage": "Early pilot in real conditions", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Bio-based polymer alternatives", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Ghana, Nigeria", "Plastic_Tonnes": 15.0, "Livelihoods": 20, "Score_Innovation_30%": 2.5, "Score_Impact_25%": 2.2, "Score_Social_20%": 2.5, "Score_Commercial_15%": 3.3, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.59, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 40, "Venture_Name": "AC ELECTRONIC/ Recyclage et valorisation des d\u00e9chets plastiques recyclables et non recyclables ", "Contact": "Younes Chakir", "Email": "Younes26083@gmail.com", "Location": "M\u00f6nchengladbach", "Stage": "Early pilot in real conditions", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Unclear - needs review", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Morocco", "Plastic_Tonnes": 120.0, "Livelihoods": 25, "Score_Innovation_30%": 1.5, "Score_Impact_25%": 2.9, "Score_Social_20%": 3.0, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.6, "WEIGHTED_SCORE": 2.58, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 57, "Venture_Name": "PLASTI-CYCLE GUINEA", "Contact": "Fatoumata I OULARE", "Email": "fatoumataioulare481@gmail.com", "Location": "Conakry", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Guinea", "Plastic_Tonnes": 100.0, "Livelihoods": 20, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 3.4, "Score_Social_20%": 3.0, "Score_Commercial_15%": 1.7, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.58, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 128, "Venture_Name": "Before the Sea Africa ", "Contact": "Akouma Misse Farel Gaetan ", "Email": "gaetanakouma82@gmail.com", "Location": "Yaound\u00e9 ", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Waste collection system", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Cameroon, Cote d'Ivoire, Ghana, Kenya, Nigeria", "Plastic_Tonnes": 60.0, "Livelihoods": 12, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 3.3, "Score_Social_20%": 3.0, "Score_Commercial_15%": 1.7, "Score_Team_10%": 3.5, "WEIGHTED_SCORE": 2.57, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 84, "Venture_Name": "Bioenergy Teknik Limited", "Contact": "Colif Isabor", "Email": "bioenergyteknik@gmail.com", "Location": "Idoani", "Stage": "Other", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform | Education/awareness", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Nigeria", "Plastic_Tonnes": 28.08, "Livelihoods": 2000, "Score_Innovation_30%": 1.5, "Score_Impact_25%": 2.5, "Score_Social_20%": 4.0, "Score_Commercial_15%": 2.7, "Score_Team_10%": 2.8, "WEIGHTED_SCORE": 2.56, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 80, "Venture_Name": "Kingplast Limited Company ", "Contact": "Kwaku Antwi Adjei", "Email": "kingplastltd.co@gmail.com", "Location": "Kumasi", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Informal team", "WHAT_THEY_DO": "\u2192 Construction materials | \u2192 Packaging alternatives", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Ghana", "Plastic_Tonnes": 10.0, "Livelihoods": 100, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 2.2, "Score_Social_20%": 3.6, "Score_Commercial_15%": 2.0, "Score_Team_10%": 3.8, "WEIGHTED_SCORE": 2.55, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 64, "Venture_Name": "UBUNTU-ZO ", "Contact": "DOREEN ASHLEY  AYEBARE ", "Email": "adoreen002@gmail.com", "Location": "Kampala ", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Informal team", "WHAT_THEY_DO": "\u2192 Packaging alternatives", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya, Uganda ", "Plastic_Tonnes": 30.0, "Livelihoods": 80, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 3.0, "Score_Social_20%": 3.3, "Score_Commercial_15%": 2.0, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.55, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 46, "Venture_Name": "SAFIPLAST CONGO", "Contact": "SMITH KAYEMBE", "Email": "smithkamwabu@gmail.com", "Location": "LUBUMBASHI", "Stage": "Lab or pilot testing", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "\u2192 Construction materials", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Democratic Republic of the Congo, Tanzania , Uganda , Zambia ", "Plastic_Tonnes": 100.0, "Livelihoods": 150, "Score_Innovation_30%": 1.5, "Score_Impact_25%": 3.2, "Score_Social_20%": 3.1, "Score_Commercial_15%": 2.5, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.54, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 135, "Venture_Name": "Africa Ecoword/ projet AKA-GNOE ", "Contact": "S\u00e9v\u00e9rine Ay\u00e9l\u00e9  KOUEVI-KOKOH ", "Email": "africaecoworld@gmail.com", "Location": "Lom\u00e9", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Unclear - needs review", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Togo", "Plastic_Tonnes": 5.0, "Livelihoods": 20, "Score_Innovation_30%": 2.0, "Score_Impact_25%": 2.2, "Score_Social_20%": 3.0, "Score_Commercial_15%": 3.5, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 2.54, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 7, "Venture_Name": "Souriant Training center ", "Contact": "DUSENGIMANA INNOCENT", "Email": "souriant2050@gmail.com", "Location": "Gisenyi", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "\u2192 Construction materials", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Rwande", "Plastic_Tonnes": 12.0, "Livelihoods": 50, "Score_Innovation_30%": 2.2, "Score_Impact_25%": 2.2, "Score_Social_20%": 3.3, "Score_Commercial_15%": 2.5, "Score_Team_10%": 2.8, "WEIGHTED_SCORE": 2.52, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 77, "Venture_Name": "Agrobright Foundation", "Contact": "Daniel   Mulonzi Munguti  ", "Email": "agrobrightfoundation@gmail.com", "Location": "Nairobi ", "Stage": "Idea Phase/ Concept ", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Kenya", "Plastic_Tonnes": 80.0, "Livelihoods": 60, "Score_Innovation_30%": 2.2, "Score_Impact_25%": 2.5, "Score_Social_20%": 3.3, "Score_Commercial_15%": 2.0, "Score_Team_10%": 2.8, "WEIGHTED_SCORE": 2.52, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 17, "Venture_Name": "Individual", "Contact": "John Lubasi", "Email": "johnlee4008@gmail.com", "Location": "Choma", "Stage": "Idea Phase/ Concept ", "Legal_Status": "University / Research spin-out", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Upcycling products | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Malawi, Mozambique, Namibia, Sierra Leone, Somalia, South Africa, Tanzania , Zambia , Zimbabwe", "Plastic_Tonnes": 200.0, "Livelihoods": 250, "Score_Innovation_30%": 1.5, "Score_Impact_25%": 3.2, "Score_Social_20%": 3.5, "Score_Commercial_15%": 2.0, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 2.52, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 107, "Venture_Name": "Tire to Energy Ltd.", "Contact": "Joe Nagy", "Email": "gumienergia@gmail.com", "Location": "Budapest", "Stage": "Early-Market Entry", "Legal_Status": "Registered startup (revenue-generating)", "WHAT_THEY_DO": "Unclear - needs review", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Other", "Plastic_Tonnes": 500.0, "Livelihoods": 100, "Score_Innovation_30%": 1.2, "Score_Impact_25%": 3.2, "Score_Social_20%": 3.1, "Score_Commercial_15%": 3.5, "Score_Team_10%": 2.0, "WEIGHTED_SCORE": 2.51, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 134, "Venture_Name": "Nigeria Youth Climate Preservation Network/ PLASTILOCK AFRICA", "Contact": "Amina  Sani Muhammad ", "Email": "amynarhmuhammad@gmail.com", "Location": "Abuja Nigeria ", "Stage": "Early pilot in real conditions", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "\u2192 Construction materials", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Nigeria", "Plastic_Tonnes": 50.0, "Livelihoods": 23, "Score_Innovation_30%": 2.2, "Score_Impact_25%": 2.5, "Score_Social_20%": 2.5, "Score_Commercial_15%": 2.8, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.5, "RECOMMENDATION": "LOW PRIORITY"}, {"ID": 86, "Venture_Name": "Community-Based Plastic Recycling into Durable Construction Pavers", "Contact": "TUYIKUNDE  Elysee", "Email": "elyseetuyikunde@gmail.com", "Location": "Kigali", "Stage": "Early pilot in real conditions", "Legal_Status": "Informal team", "WHAT_THEY_DO": "\u2192 Construction materials", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Burundi, Democratic Republic of the Congo, Djibouti, Kenya, Rwande, Tanzania ", "Plastic_Tonnes": 7.0, "Livelihoods": 5, "Score_Innovation_30%": 1.9, "Score_Impact_25%": 2.5, "Score_Social_20%": 2.7, "Score_Commercial_15%": 2.8, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.48, "RECOMMENDATION": "NOT RECOMMENDED"}, {"ID": 81, "Venture_Name": "Nicholasmotivates Initiative (NMI) Project Title: Solar-Powered Eco-Friendly Menstrual Health System (SPEMHS)", "Contact": "Nicholason Ugwuanyi", "Email": "founder@nminitiative.com", "Location": "Abuja", "Stage": "Early pilot in real conditions", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Education/awareness", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Nigeria", "Plastic_Tonnes": 5.0, "Livelihoods": 60, "Score_Innovation_30%": 1.7, "Score_Impact_25%": 2.2, "Score_Social_20%": 3.3, "Score_Commercial_15%": 2.8, "Score_Team_10%": 3.3, "WEIGHTED_SCORE": 2.47, "RECOMMENDATION": "NOT RECOMMENDED"}, {"ID": 55, "Venture_Name": "Your waste Your wealth ", "Contact": "Upoh Runni Macauley Gift ", "Email": "giftgodventure@gmail.com", "Location": "Asaba", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Cameroon, Chad, Ghana, Niger, Nigeria", "Plastic_Tonnes": 80.0, "Livelihoods": 150, "Score_Innovation_30%": 1.5, "Score_Impact_25%": 2.8, "Score_Social_20%": 3.6, "Score_Commercial_15%": 2.2, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 2.47, "RECOMMENDATION": "NOT RECOMMENDED"}, {"ID": 97, "Venture_Name": "Community Plastic Recovery & Recycling Initiative (CPRRI)", "Contact": "Uche  Iro ", "Email": "multismartskill@gmail.com", "Location": "Benin City", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Benin, Ghana, Mali, Niger, Nigeria", "Plastic_Tonnes": 30.0, "Livelihoods": 50, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 2.8, "Score_Social_20%": 3.3, "Score_Commercial_15%": 1.7, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.46, "RECOMMENDATION": "NOT RECOMMENDED"}, {"ID": 25, "Venture_Name": "AY Health Consultancy Services", "Contact": "Ayana Tola", "Email": "nafkun2009@gmail.com", "Location": "Addis Ababa", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Mechanical recycling | Education/awareness", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Ethiopia", "Plastic_Tonnes": 120.0, "Livelihoods": 210, "Score_Innovation_30%": 1.5, "Score_Impact_25%": 2.9, "Score_Social_20%": 3.5, "Score_Commercial_15%": 1.7, "Score_Team_10%": 3.1, "WEIGHTED_SCORE": 2.44, "RECOMMENDATION": "NOT RECOMMENDED"}, {"ID": 78, "Venture_Name": "Miracula plastics ", "Contact": "Amos Urassa", "Email": "amosurassa48@gmail.com", "Location": "Arusha", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Informal team", "WHAT_THEY_DO": "Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya, Tanzania , Uganda ", "Plastic_Tonnes": 650.0, "Livelihoods": 40, "Score_Innovation_30%": 1.5, "Score_Impact_25%": 3.2, "Score_Social_20%": 2.5, "Score_Commercial_15%": 2.0, "Score_Team_10%": 3.1, "WEIGHTED_SCORE": 2.36, "RECOMMENDATION": "NOT RECOMMENDED"}, {"ID": 89, "Venture_Name": "Kratos Technologies ", "Contact": "Andrew Okene", "Email": "andrewokene55@gmail.com", "Location": "Bloemfontein", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "South Africa", "Plastic_Tonnes": 10.0, "Livelihoods": 100, "Score_Innovation_30%": 1.9, "Score_Impact_25%": 2.2, "Score_Social_20%": 3.1, "Score_Commercial_15%": 2.2, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 2.34, "RECOMMENDATION": "NOT RECOMMENDED"}, {"ID": 120, "Venture_Name": "St\u00e9thoscope connect\u00e9 intelligent", "Contact": "Wendpanga Kizito BAGRE", "Email": "www.kizitobagre@gmail.com", "Location": "Ouagadougou", "Stage": "Lab or pilot testing", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Spectral/optical sorting", "SCIENCE_LEVEL": "\u2605\u2606\u2606 SOME SCIENCE - Limited", "Target_Countries": "Benin, Burkina Faso, Cote d'Ivoire, Madagascar, Mali, Morocco, Niger, Nigeria, Rwande, Senegal, Seychelles", "Plastic_Tonnes": 5.0, "Livelihoods": 10, "Score_Innovation_30%": 1.9, "Score_Impact_25%": 2.5, "Score_Social_20%": 2.5, "Score_Commercial_15%": 2.5, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 2.34, "RECOMMENDATION": "NOT RECOMMENDED"}, {"ID": 91, "Venture_Name": "projet bambou ", "Contact": "TAFITAMALALA  Nomenjanahary Rhonia", "Email": "tafitanomenjanahary@gmail.com", "Location": "Tul\u00e9ar de Madagascar ", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Unclear - needs review", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Madagascar, South Africa", "Plastic_Tonnes": 200.0, "Livelihoods": 113, "Score_Innovation_30%": 1.2, "Score_Impact_25%": 2.9, "Score_Social_20%": 3.6, "Score_Commercial_15%": 1.7, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 2.33, "RECOMMENDATION": "NOT RECOMMENDED"}, {"ID": 1, "Venture_Name": "Individual ", "Contact": "Ackson Mwenda", "Email": "acksonzed@gmail.com", "Location": "Luanda", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Angola, Mauritius , Nigeria, South Africa", "Plastic_Tonnes": 2.0, "Livelihoods": 25, "Score_Innovation_30%": 1.5, "Score_Impact_25%": 3.0, "Score_Social_20%": 2.5, "Score_Commercial_15%": 1.7, "Score_Team_10%": 3.5, "WEIGHTED_SCORE": 2.31, "RECOMMENDATION": "NOT RECOMMENDED"}, {"ID": 133, "Venture_Name": "Bilan Awdal Organization", "Contact": "Hasan Noor Ahmed", "Email": "biland.awdal.org@gmail.com", "Location": "Boorama", "Stage": "Idea Phase/ Concept ", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Somalia", "Plastic_Tonnes": 12.0, "Livelihoods": 40, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 2.2, "Score_Social_20%": 3.0, "Score_Commercial_15%": 2.0, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.29, "RECOMMENDATION": "NOT RECOMMENDED"}, {"ID": 54, "Venture_Name": "Mya\u2019s Treats ", "Contact": "Fualefac Laurantine  Ekokobe", "Email": "fualefaclaurantineekokobe@gmail.com", "Location": "Douala", "Stage": "Early-Market Entry", "Legal_Status": "Informal team", "WHAT_THEY_DO": "\u2192 Packaging alternatives", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Cameroon, Ghana, Nigeria", "Plastic_Tonnes": 0.5, "Livelihoods": 5, "Score_Innovation_30%": 1.5, "Score_Impact_25%": 2.2, "Score_Social_20%": 2.7, "Score_Commercial_15%": 3.0, "Score_Team_10%": 3.0, "WEIGHTED_SCORE": 2.29, "RECOMMENDATION": "NOT RECOMMENDED"}, {"ID": 6, "Venture_Name": "Individual", "Contact": "Omary Mrisho", "Email": "omarymj15@gmail.com", "Location": "Kahama - Shinyanga ", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Individual / Researcher", "WHAT_THEY_DO": "Unclear - needs review", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Tanzania ", "Plastic_Tonnes": 180.0, "Livelihoods": 12, "Score_Innovation_30%": 1.7, "Score_Impact_25%": 2.9, "Score_Social_20%": 2.5, "Score_Commercial_15%": 1.7, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 2.26, "RECOMMENDATION": "NOT RECOMMENDED"}, {"ID": 44, "Venture_Name": "Centre de Recherche et l'etude pour le d\u00e9veloppements (CRED)", "Contact": "Fiston  Irangabiye", "Email": "fistonirangabiye2@gmail.com", "Location": "Bujumbura", "Stage": "Early pilot in real conditions", "Legal_Status": "NGO / Hybrid entity", "WHAT_THEY_DO": "Waste collection system | Mechanical recycling", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Burundi", "Plastic_Tonnes": 5.0, "Livelihoods": 50, "Score_Innovation_30%": 1.5, "Score_Impact_25%": 2.2, "Score_Social_20%": 2.8, "Score_Commercial_15%": 2.8, "Score_Team_10%": 2.7, "WEIGHTED_SCORE": 2.25, "RECOMMENDATION": "NOT RECOMMENDED"}, {"ID": 63, "Venture_Name": "Better Arese Venture Kenya", "Contact": "Kelvin Mwaura", "Email": "kymkevo@gmail.com", "Location": "Nairobi", "Stage": "Lab or pilot testing", "Legal_Status": "Informal team", "WHAT_THEY_DO": "Mechanical recycling", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Kenya", "Plastic_Tonnes": 50.0, "Livelihoods": 100, "Score_Innovation_30%": 1.2, "Score_Impact_25%": 2.5, "Score_Social_20%": 3.1, "Score_Commercial_15%": 2.8, "Score_Team_10%": 2.0, "WEIGHTED_SCORE": 2.23, "RECOMMENDATION": "NOT RECOMMENDED"}, {"ID": 96, "Venture_Name": "rw", "Contact": "ronald Odero", "Email": "sharonokaka@gmail.com", "Location": "Nairobi (County)", "Stage": "Idea Phase/ Concept ", "Legal_Status": "Registered startup (pre-revenue)", "WHAT_THEY_DO": "Unclear - needs review", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Angola", "Plastic_Tonnes": 22.0, "Livelihoods": 1222, "Score_Innovation_30%": 1.2, "Score_Impact_25%": 2.5, "Score_Social_20%": 3.5, "Score_Commercial_15%": 2.2, "Score_Team_10%": 2.0, "WEIGHTED_SCORE": 2.22, "RECOMMENDATION": "NOT RECOMMENDED"}, {"ID": 34, "Venture_Name": "CleanMowe", "Contact": "Jacob Alabi", "Email": "talk2jaywal@gmail.com", "Location": "Ogbomoso", "Stage": "Early pilot in real conditions", "Legal_Status": "Informal team", "WHAT_THEY_DO": "Waste collection system | Digital platform", "SCIENCE_LEVEL": "? UNCLEAR - Review needed", "Target_Countries": "Nigeria", "Plastic_Tonnes": 7.5, "Livelihoods": 4, "Score_Innovation_30%": 1.8, "Score_Impact_25%": 2.2, "Score_Social_20%": 2.2, "Score_Commercial_15%": 2.8, "Score_Team_10%": 2.5, "WEIGHTED_SCORE": 2.2, "RECOMMENDATION": "NOT RECOMMENDED"}];
+
+        const summaryCounts = {};
+        const categories = ['★ STRONGLY RECOMMEND', '★ RECOMMEND', 'SHORTLIST', 'CONSIDER', 'MAYBE - Limited science', 'LOW PRIORITY', 'NOT RECOMMENDED'];
+        categories.forEach(c => summaryCounts[c] = 0);
+
+        applicants.forEach(a => {
+            const rec = a.RECOMMENDATION;
+            if (rec.includes('STRONGLY')) summaryCounts['★ STRONGLY RECOMMEND']++;
+            else if (rec === '★ RECOMMEND') summaryCounts['★ RECOMMEND']++;
+            else if (rec === 'SHORTLIST') summaryCounts['SHORTLIST']++;
+            else if (rec === 'CONSIDER') summaryCounts['CONSIDER']++;
+            else if (rec.includes('MAYBE')) summaryCounts['MAYBE - Limited science']++;
+            else if (rec === 'LOW PRIORITY') summaryCounts['LOW PRIORITY']++;
+            else summaryCounts['NOT RECOMMENDED']++;
+        });
+
+        function renderSummary() {
+            const grid = document.getElementById('summaryGrid');
+            const labels = {
+                '★ STRONGLY RECOMMEND': 'Strongly Recommend',
+                '★ RECOMMEND': 'Recommend',
+                'SHORTLIST': 'Shortlist',
+                'CONSIDER': 'Consider',
+                'MAYBE - Limited science': 'Maybe',
+                'LOW PRIORITY': 'Low Priority',
+                'NOT RECOMMENDED': 'Not Recommended'
+            };
+            grid.innerHTML = Object.entries(summaryCounts).map(([key, value]) => 
+                `<div class="summary-card" data-filter="${key}">
+                    <div class="summary-value">${value}</div>
+                    <div class="summary-label">${labels[key]}</div>
+                </div>`
+            ).join('');
+        }
+
+        function getScienceBadgeClass(level) {
+            if (level.includes('★★★')) return 'strong';
+            if (level.includes('★★☆')) return 'good';
+            if (level.includes('★☆☆')) return 'some';
+            if (level.includes('☆☆☆')) return 'conventional';
+            return 'unclear';
+        }
+
+        function getRecommendationClass(rec) {
+            if (rec.includes('STRONGLY')) return 'strongly';
+            if (rec === '★ RECOMMEND') return 'recommend';
+            if (rec === 'SHORTLIST') return 'shortlist';
+            if (rec === 'CONSIDER') return 'consider';
+            if (rec.includes('MAYBE')) return 'maybe';
+            if (rec === 'LOW PRIORITY') return 'low';
+            return 'not';
+        }
+
+        function getCardColor(rec) {
+            if (rec.includes('STRONGLY')) return '#00d4aa';
+            if (rec === '★ RECOMMEND') return '#4fffdb';
+            if (rec === 'SHORTLIST') return '#7dd3fc';
+            if (rec === 'CONSIDER') return '#fbbf24';
+            if (rec.includes('MAYBE')) return '#fb923c';
+            if (rec === 'LOW PRIORITY') return '#f87171';
+            return '#ef4444';
+        }
+
+        function renderApplicants(data) {
+            const grid = document.getElementById('applicantsGrid');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (data.length === 0) {
+                grid.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            
+            grid.innerHTML = data.map((a, i) => `
+                <div class="applicant-card" style="--card-color: ${getCardColor(a.RECOMMENDATION)}" onclick="this.classList.toggle('expanded')">
+                    <div class="card-main">
+                        <div class="science-badge ${getScienceBadgeClass(a.SCIENCE_LEVEL)}">${a.SCIENCE_LEVEL.substring(0, 3)}</div>
+                        <div class="card-info">
+                            <div class="card-header">
+                                <span class="venture-name">${a.Venture_Name}</span>
+                                <span class="recommendation-tag ${getRecommendationClass(a.RECOMMENDATION)}">${a.RECOMMENDATION}</span>
+                            </div>
+                            <div class="what-they-do">${a.WHAT_THEY_DO}</div>
+                            <div class="science-level">${a.SCIENCE_LEVEL}</div>
+                        </div>
+                        <div class="card-score">
+                            <div class="score-value">${a.WEIGHTED_SCORE.toFixed(2)}</div>
+                            <div class="score-label">Score</div>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <div class="details-grid">
+                            <div class="detail-item"><div class="detail-label">Contact</div><div class="detail-value">${a.Contact}</div></div>
+                            <div class="detail-item"><div class="detail-label">Email</div><div class="detail-value">${a.Email}</div></div>
+                            <div class="detail-item"><div class="detail-label">Location</div><div class="detail-value">${a.Location}</div></div>
+                            <div class="detail-item"><div class="detail-label">Stage</div><div class="detail-value">${a.Stage}</div></div>
+                            <div class="detail-item"><div class="detail-label">Legal Status</div><div class="detail-value">${a.Legal_Status}</div></div>
+                            <div class="detail-item"><div class="detail-label">Target Countries</div><div class="detail-value">${a.Target_Countries}</div></div>
+                            <div class="detail-item"><div class="detail-label">Plastic Impact</div><div class="detail-value">${a.Plastic_Tonnes} tonnes</div></div>
+                            <div class="detail-item"><div class="detail-label">Livelihoods</div><div class="detail-value">${a.Livelihoods} people</div></div>
+                        </div>
+                        <div class="scores-breakdown">
+                            <div class="score-item"><span class="score-item-label">Innovation</span><div class="score-bar"><div class="score-bar-fill" style="width:${a['Score_Innovation_30%']*20}%"></div></div><span class="score-item-value">${a['Score_Innovation_30%']}</span></div>
+                            <div class="score-item"><span class="score-item-label">Impact</span><div class="score-bar"><div class="score-bar-fill" style="width:${a['Score_Impact_25%']*20}%"></div></div><span class="score-item-value">${a['Score_Impact_25%']}</span></div>
+                            <div class="score-item"><span class="score-item-label">Social</span><div class="score-bar"><div class="score-bar-fill" style="width:${a['Score_Social_20%']*20}%"></div></div><span class="score-item-value">${a['Score_Social_20%']}</span></div>
+                            <div class="score-item"><span class="score-item-label">Commercial</span><div class="score-bar"><div class="score-bar-fill" style="width:${a['Score_Commercial_15%']*20}%"></div></div><span class="score-item-value">${a['Score_Commercial_15%']}</span></div>
+                            <div class="score-item"><span class="score-item-label">Team</span><div class="score-bar"><div class="score-bar-fill" style="width:${a['Score_Team_10%']*20}%"></div></div><span class="score-item-value">${a['Score_Team_10%']}</span></div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('visibleCount').textContent = data.length;
+        }
+
+        let filters = { search: '', recommendation: null, scienceOnly: false };
+
+        function applyFilters() {
+            let filtered = [...applicants];
+            
+            if (filters.search) {
+                const s = filters.search.toLowerCase();
+                filtered = filtered.filter(a => 
+                    a.Venture_Name.toLowerCase().includes(s) ||
+                    a.WHAT_THEY_DO.toLowerCase().includes(s) ||
+                    a.Location.toLowerCase().includes(s) ||
+                    a.Target_Countries.toLowerCase().includes(s)
+                );
+            }
+            
+            if (filters.recommendation) {
+                filtered = filtered.filter(a => {
+                    if (filters.recommendation.includes('STRONGLY')) return a.RECOMMENDATION.includes('STRONGLY');
+                    if (filters.recommendation.includes('MAYBE')) return a.RECOMMENDATION.includes('MAYBE');
+                    return a.RECOMMENDATION === filters.recommendation;
+                });
+            }
+            
+            if (filters.scienceOnly) {
+                filtered = filtered.filter(a => a.SCIENCE_LEVEL.includes('★★★') || a.SCIENCE_LEVEL.includes('★★☆'));
+            }
+            
+            renderApplicants(filtered);
+        }
+
+        document.getElementById('searchInput').addEventListener('input', e => {
+            filters.search = e.target.value;
+            applyFilters();
+        });
+
+        document.getElementById('scienceOnlyBtn').addEventListener('click', function() {
+            this.classList.toggle('active');
+            filters.scienceOnly = this.classList.contains('active');
+            applyFilters();
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            filters = { search: '', recommendation: null, scienceOnly: false };
+            document.getElementById('searchInput').value = '';
+            document.getElementById('scienceOnlyBtn').classList.remove('active');
+            document.querySelectorAll('.summary-card').forEach(c => c.classList.remove('active'));
+            applyFilters();
+        });
+
+        document.getElementById('summaryGrid').addEventListener('click', e => {
+            const card = e.target.closest('.summary-card');
+            if (card) {
+                const filter = card.dataset.filter;
+                document.querySelectorAll('.summary-card').forEach(c => c.classList.remove('active'));
+                if (filters.recommendation === filter) {
+                    filters.recommendation = null;
+                } else {
+                    card.classList.add('active');
+                    filters.recommendation = filter;
+                }
+                applyFilters();
+            }
+        });
+
+        document.getElementById('totalCount').textContent = applicants.length;
+        document.getElementById('totalApplicants').textContent = applicants.length;
+        renderSummary();
+        renderApplicants(applicants);
+    </script>
+</body>
+</html>
