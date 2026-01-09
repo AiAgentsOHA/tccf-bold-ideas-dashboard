@@ -179,11 +179,6 @@ def main():
         if df is None:
             return
         
-        # Recommendation filter
-        recommendations = ['All'] + sorted(df['RECOMMENDATION'].unique().tolist())
-        selected_rec = st.selectbox("Recommendation", recommendations)
-        
-        # Science level filter
         science_levels = ['All'] + sorted(df['SCIENCE_LEVEL'].unique().tolist())
         selected_science = st.selectbox("Science Level", science_levels)
         
