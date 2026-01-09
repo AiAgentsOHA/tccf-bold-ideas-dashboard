@@ -124,7 +124,7 @@ st.markdown("""
 def load_data():
     """Load evaluation data from CSV."""
     try:
-        df = pd.read_csv('/mnt/user-data/outputs/TCCF_Bold_Ideas_FINAL.csv')
+        df = pd.read_csv('mnt/user-data/outputs/TCCF_Bold_Ideas_FINAL.csv')
         return df
     except FileNotFoundError:
         st.error("Data file not found. Please run the evaluation script first.")
